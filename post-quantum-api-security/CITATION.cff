@@ -1,0 +1,38 @@
+cff-version: 1.2.0
+message: "If you use this work, please cite it using the metadata below."
+type: software
+title: "Post-Quantum Secure API Communication: Architectures and Migration Strategies for Quantum-Resilient Systems"
+authors:
+  - family-names: "Roy"
+    given-names: "Subhajit"
+    orcid: "https://orcid.org/0009-0000-4896-0922"
+    email: subhajitroy857@gmail.com
+repository-code: "https://github.com/sr-857/post-quantum-api-security"
+url: "https://doi.org/10.5281/zenodo.20413115"
+doi: 10.5281/zenodo.20413115
+license: MIT
+version: 1.0.0
+date-released: "2026-01-01"
+keywords:
+  - post-quantum cryptography
+  - API security
+  - quantum-safe communication
+  - hybrid TLS
+  - ML-KEM
+  - TLS 1.3
+  - cryptographic agility
+  - NIST PQC
+  - distributed systems security
+  - applied cryptography
+preferred-citation:
+  type: misc
+  title: "Post-Quantum Secure API Communication: Architectures and Migration Strategies for Quantum-Resilient Systems"
+  authors:
+    - family-names: "Roy"
+      given-names: "Subhajit"
+      orcid: "https://orcid.org/0009-0000-4896-0922"
+  year: 2026
+  publisher:
+    name: Zenodo
+  doi: 10.5281/zenodo.20413115
+  url: "https://doi.org/10.5281/zenodo.20413115"

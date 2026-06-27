@@ -1,0 +1,34 @@
+<svg viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1f2933"/>
+      <stop offset="100%" stop-color="#0d7a7a"/>
+    </linearGradient>
+  </defs>
+  <rect x="0" y="0" width="240" height="240" rx="28" fill="url(#bgGrad)"/>
+
+  <!-- Shield outline representing security -->
+  <path d="M120 38 L176 60 V118 C176 158 152 188 120 202 C88 188 64 158 64 118 V60 Z"
+        fill="none" stroke="#ffffff" stroke-width="6" stroke-linejoin="round"/>
+
+  <!-- Lattice motif representing lattice-based PQC -->
+  <g stroke="#bfe8e8" stroke-width="2.5" opacity="0.9">
+    <line x1="88" y1="88" x2="152" y2="88"/>
+    <line x1="88" y1="118" x2="152" y2="118"/>
+    <line x1="88" y1="148" x2="152" y2="148"/>
+    <line x1="88" y1="88" x2="88" y2="148"/>
+    <line x1="120" y1="88" x2="120" y2="148"/>
+    <line x1="152" y1="88" x2="152" y2="148"/>
+  </g>
+  <g fill="#ffffff">
+    <circle cx="88" cy="88" r="4.5"/>
+    <circle cx="120" cy="88" r="4.5"/>
+    <circle cx="152" cy="88" r="4.5"/>
+    <circle cx="88" cy="118" r="4.5"/>
+    <circle cx="120" cy="118" r="4.5"/>
+    <circle cx="152" cy="118" r="4.5"/>
+    <circle cx="88" cy="148" r="4.5"/>
+    <circle cx="120" cy="148" r="4.5"/>
+    <circle cx="152" cy="148" r="4.5"/>
+  </g>
+</svg>

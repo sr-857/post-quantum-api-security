@@ -1,0 +1,62 @@
+<svg viewBox="0 0 900 480" xmlns="http://www.w3.org/2000/svg" font-family="Helvetica, Arial, sans-serif">
+  <rect x="0" y="0" width="900" height="480" fill="#ffffff"/>
+
+  <text x="450" y="32" text-anchor="middle" font-size="20" font-weight="700" fill="#1f2933">Four-Phase Post-Quantum Migration Roadmap</text>
+  <text x="450" y="54" text-anchor="middle" font-size="13" fill="#52606d">Transport-layer protection first; certificate / token migration follow on a coordinated timeline</text>
+
+  <!-- Timeline spine -->
+  <line x1="80" y1="230" x2="820" y2="230" stroke="#cbd2d9" stroke-width="3"/>
+
+  <!-- Phase 0 -->
+  <circle cx="140" cy="230" r="10" fill="#1f2933"/>
+  <rect x="60" y="100" width="160" height="100" rx="8" fill="#1f2933"/>
+  <text x="140" y="124" text-anchor="middle" font-size="12.5" font-weight="700" fill="#ffffff">Phase 0</text>
+  <text x="140" y="142" text-anchor="middle" font-size="12" fill="#ffffff" font-weight="600">Inventory</text>
+  <text x="140" y="160" text-anchor="middle" font-size="10" fill="#cbd2d9">Catalog crypto deps across</text>
+  <text x="140" y="173" text-anchor="middle" font-size="10" fill="#cbd2d9">transport, cert, token, gateway</text>
+  <text x="140" y="186" text-anchor="middle" font-size="10" fill="#cbd2d9">incl. third-party / vendor infra</text>
+  <line x1="140" y1="200" x2="140" y2="220" stroke="#1f2933" stroke-width="2"/>
+
+  <!-- Phase 1 -->
+  <circle cx="340" cy="230" r="10" fill="#27414a"/>
+  <rect x="260" y="260" width="160" height="100" rx="8" fill="#27414a"/>
+  <text x="340" y="284" text-anchor="middle" font-size="12.5" font-weight="700" fill="#ffffff">Phase 1</text>
+  <text x="340" y="302" text-anchor="middle" font-size="12" fill="#ffffff" font-weight="600">Hybrid Transport</text>
+  <text x="340" y="320" text-anchor="middle" font-size="10" fill="#cbd2d9">Enable hybrid TLS key</text>
+  <text x="340" y="333" text-anchor="middle" font-size="10" fill="#cbd2d9">exchange at gateway/LB tier</text>
+  <text x="340" y="346" text-anchor="middle" font-size="10" fill="#cbd2d9">classical fallback retained</text>
+  <line x1="340" y1="260" x2="340" y2="240" stroke="#27414a" stroke-width="2"/>
+
+  <!-- Phase 2 -->
+  <circle cx="560" cy="230" r="10" fill="#0d7a7a"/>
+  <rect x="480" y="100" width="160" height="100" rx="8" fill="#0d7a7a"/>
+  <text x="560" y="124" text-anchor="middle" font-size="12.5" font-weight="700" fill="#ffffff">Phase 2</text>
+  <text x="560" y="142" text-anchor="middle" font-size="12" fill="#ffffff" font-weight="600">Cert + Token Migration</text>
+  <text x="560" y="160" text-anchor="middle" font-size="10" fill="#e3f4f4">Composite / parallel PQC</text>
+  <text x="560" y="173" text-anchor="middle" font-size="10" fill="#e3f4f4">cert chains; dual-algorithm</text>
+  <text x="560" y="186" text-anchor="middle" font-size="10" fill="#e3f4f4">JWT issuance + validation</text>
+  <line x1="560" y1="200" x2="560" y2="220" stroke="#0d7a7a" stroke-width="2"/>
+
+  <!-- Phase 3 -->
+  <circle cx="780" cy="230" r="10" fill="#3b6f78"/>
+  <rect x="700" y="260" width="160" height="100" rx="8" fill="#3b6f78"/>
+  <text x="780" y="284" text-anchor="middle" font-size="12.5" font-weight="700" fill="#ffffff">Phase 3</text>
+  <text x="780" y="302" text-anchor="middle" font-size="12" fill="#ffffff" font-weight="600">Agility Consolidation</text>
+  <text x="780" y="320" text-anchor="middle" font-size="10" fill="#dff3f3">Remove deprecated classical</text>
+  <text x="780" y="333" text-anchor="middle" font-size="10" fill="#dff3f3">paths once client population</text>
+  <text x="780" y="346" text-anchor="middle" font-size="10" fill="#dff3f3">/ compliance permit</text>
+  <line x1="780" y1="260" x2="780" y2="240" stroke="#3b6f78" stroke-width="2"/>
+
+  <!-- connecting arrows along spine -->
+  <line x1="150" y1="230" x2="330" y2="230" stroke="#9aa5b1" stroke-width="2"/>
+  <line x1="350" y1="230" x2="550" y2="230" stroke="#9aa5b1" stroke-width="2"/>
+  <line x1="570" y1="230" x2="770" y2="230" stroke="#9aa5b1" stroke-width="2"/>
+
+  <!-- Risk/exposure annotation -->
+  <rect x="60" y="400" width="780" height="56" rx="8" fill="#f6f8f9" stroke="#cbd2d9"/>
+  <text x="80" y="422" font-size="12" font-weight="700" fill="#1f2933">Sequencing rationale:</text>
+  <text x="80" y="440" font-size="11.5" fill="#52606d">HNDL exposure accrues continuously, so transport-layer protection (Phase 1) is prioritized; certificate / token migration</text>
+  <text x="80" y="453" font-size="11.5" fill="#52606d">(Phase 2) affects authenticity rather than confidentiality and can proceed on a slightly longer timeline without retroactive risk.</text>
+
+  <text x="450" y="475" text-anchor="middle" font-size="0" fill="#9aa5b1"></text>
+</svg>
