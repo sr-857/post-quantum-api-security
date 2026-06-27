@@ -1,0 +1,68 @@
+<svg viewBox="0 0 1200 300" xmlns="http://www.w3.org/2000/svg" font-family="Helvetica, Arial, sans-serif">
+  <defs>
+    <linearGradient id="bannerBg" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#1f2933"/>
+      <stop offset="100%" stop-color="#173b3f"/>
+    </linearGradient>
+  </defs>
+  <rect x="0" y="0" width="1200" height="300" fill="url(#bannerBg)"/>
+
+  <!-- Lattice motif background, subtle -->
+  <g stroke="#2f5360" stroke-width="1.5" opacity="0.5">
+    <line x1="780" y1="40" x2="1160" y2="40"/>
+    <line x1="780" y1="100" x2="1160" y2="100"/>
+    <line x1="780" y1="160" x2="1160" y2="160"/>
+    <line x1="780" y1="220" x2="1160" y2="220"/>
+    <line x1="780" y1="260" x2="1160" y2="260"/>
+    <line x1="800" y1="20" x2="800" y2="280"/>
+    <line x1="860" y1="20" x2="860" y2="280"/>
+    <line x1="920" y1="20" x2="920" y2="280"/>
+    <line x1="980" y1="20" x2="980" y2="280"/>
+    <line x1="1040" y1="20" x2="1040" y2="280"/>
+    <line x1="1100" y1="20" x2="1100" y2="280"/>
+    <line x1="1160" y1="20" x2="1160" y2="280"/>
+  </g>
+  <g fill="#0d7a7a">
+    <circle cx="800" cy="40" r="3.5"/><circle cx="860" cy="40" r="3.5"/><circle cx="920" cy="40" r="3.5"/>
+    <circle cx="980" cy="40" r="3.5"/><circle cx="1040" cy="40" r="3.5"/><circle cx="1100" cy="40" r="3.5"/>
+    <circle cx="800" cy="100" r="3.5"/><circle cx="860" cy="100" r="3.5"/><circle cx="920" cy="100" r="3.5"/>
+    <circle cx="980" cy="100" r="3.5"/><circle cx="1040" cy="100" r="3.5"/><circle cx="1100" cy="100" r="3.5"/>
+    <circle cx="800" cy="160" r="3.5"/><circle cx="860" cy="160" r="3.5"/><circle cx="920" cy="160" r="3.5"/>
+    <circle cx="980" cy="160" r="3.5"/><circle cx="1040" cy="160" r="3.5"/><circle cx="1100" cy="160" r="3.5"/>
+    <circle cx="800" cy="220" r="3.5"/><circle cx="860" cy="220" r="3.5"/><circle cx="920" cy="220" r="3.5"/>
+    <circle cx="980" cy="220" r="3.5"/><circle cx="1040" cy="220" r="3.5"/><circle cx="1100" cy="220" r="3.5"/>
+  </g>
+
+  <!-- Shield icon -->
+  <path d="M105 70 L150 86 V134 C150 164 130 188 105 198 C80 188 60 164 60 134 V86 Z"
+        fill="none" stroke="#0d7a7a" stroke-width="5" stroke-linejoin="round"/>
+  <g stroke="#bfe8e8" stroke-width="2" opacity="0.9">
+    <line x1="80" y1="110" x2="130" y2="110"/>
+    <line x1="80" y1="135" x2="130" y2="135"/>
+    <line x1="80" y1="160" x2="130" y2="160"/>
+    <line x1="80" y1="110" x2="80" y2="160"/>
+    <line x1="105" y1="110" x2="105" y2="160"/>
+    <line x1="130" y1="110" x2="130" y2="160"/>
+  </g>
+
+  <!-- Title text -->
+  <text x="190" y="110" font-size="40" font-weight="700" fill="#ffffff">Post-Quantum Secure API Communication</text>
+  <text x="190" y="148" font-size="19" fill="#9aa5b1">Architectures and Migration Strategies for Quantum-Resilient Systems</text>
+
+  <!-- tags -->
+  <g font-size="13" fill="#0d7a7a">
+    <rect x="190" y="172" width="78" height="26" rx="13" fill="#0d7a7a" opacity="0.18"/>
+    <text x="229" y="189" text-anchor="middle" fill="#bfe8e8">ML-KEM</text>
+
+    <rect x="280" y="172" width="78" height="26" rx="13" fill="#0d7a7a" opacity="0.18"/>
+    <text x="319" y="189" text-anchor="middle" fill="#bfe8e8">ML-DSA</text>
+
+    <rect x="370" y="172" width="100" height="26" rx="13" fill="#0d7a7a" opacity="0.18"/>
+    <text x="420" y="189" text-anchor="middle" fill="#bfe8e8">TLS 1.3</text>
+
+    <rect x="482" y="172" width="118" height="26" rx="13" fill="#0d7a7a" opacity="0.18"/>
+    <text x="541" y="189" text-anchor="middle" fill="#bfe8e8">NIST PQC</text>
+  </g>
+
+  <text x="190" y="240" font-size="14.5" fill="#7b8794">Subhajit Roy · Independent Researcher · ORCID 0009-0000-4896-0922</text>
+</svg>
