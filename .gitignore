@@ -1,0 +1,47 @@
+# LaTeX build artifacts
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.fdb_latexmk
+*.fls
+*.lof
+*.log
+*.lot
+*.out
+*.run.xml
+*.synctex.gz
+*.toc
+*.nav
+*.snm
+*.vrb
+*.xdv
+
+# Keep the compiled PDF, but ignore intermediate page rasterizations
+paper/page-*.jpg
+paper/page-*.png
+
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+*.swp
+*~
+.vscode/
+.idea/
+
+# Python (benchmark / prototype tooling)
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Node (if implementation tooling uses it)
+node_modules/
+
+# Environment files
+.env
+.env.local
+
+# Benchmark raw output (large data; track via release assets instead)
+implementation/benchmarks/raw-data/
+*.csv.gz

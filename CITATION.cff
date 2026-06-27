@@ -8,7 +8,7 @@ authors:
     orcid: "https://orcid.org/0009-0000-4896-0922"
     email: subhajitroy857@gmail.com
 repository-code: "https://github.com/sr-857/post-quantum-api-security"
-url: "https://doi.org/10.5281/zenodo.20413115"
+url: "https://github.com/sr-857/post-quantum-api-security"
 doi: 10.5281/zenodo.20413115
 license: MIT
 version: 1.0.0

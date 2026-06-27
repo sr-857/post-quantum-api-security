@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Ask a Question / Start a Discussion
+    url: https://github.com/sr-857/post-quantum-api-security/discussions
+    about: For open-ended questions about the research, use GitHub Discussions rather than an issue.
+  - name: Report a Security Vulnerability
+    url: https://github.com/sr-857/post-quantum-api-security/security/policy
+    about: Please do not open a public issue for security vulnerabilities — see SECURITY.md for the private reporting process.
