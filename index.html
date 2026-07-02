@@ -1,0 +1,2086 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Post-Quantum Secure API Communication: Architectures and Migration Strategies for Quantum-Resilient Systems. Research by Subhajit Roy.">
+    <meta name="keywords" content="post-quantum cryptography, API security, quantum-safe, hybrid TLS, ML-KEM, NIST PQC, cryptographic agility">
+    <meta name="author" content="Subhajit Roy">
+    <meta name="ORCID" content="0009-0000-4896-0922">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="Post-Quantum Secure API Communication">
+    <meta property="og:description" content="Research on quantum-resilient API security architectures and migration strategies">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://sr-857.github.io/post-quantum-api-security/">
+    <meta property="og:image" content="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 630'%3E%3Crect fill='%23020617' width='1200' height='630'/%3E%3Ctext x='50%25' y='50%25' font-size='48' fill='%232563EB' text-anchor='middle' dominant-baseline='middle' font-family='Arial, sans-serif' font-weight='bold'%3EPost-Quantum Secure API Communication%3C/text%3E%3C/svg%3E">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Post-Quantum Secure API Communication">
+    <meta name="twitter:description" content="Architectures and Migration Strategies for Quantum-Resilient Systems">
+    
+    <!-- Schema.org -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "ScholarlyArticle",
+        "headline": "Post-Quantum Secure API Communication: Architectures and Migration Strategies for Quantum-Resilient Systems",
+        "author": {
+            "@type": "Person",
+            "name": "Subhajit Roy",
+            "url": "https://orcid.org/0009-0000-4896-0922"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "Zenodo"
+        },
+        "datePublished": "2026-01-01",
+        "description": "Research on post-quantum cryptography migration strategies for API systems",
+        "keywords": "post-quantum cryptography, API security, hybrid TLS, ML-KEM, NIST PQC",
+        "identifier": "10.5281/zenodo.20413115"
+    }
+    </script>
+    
+    <title>Post-Quantum Secure API Communication - Research</title>
+    <link rel="canonical" href="https://sr-857.github.io/post-quantum-api-security/">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect fill='%232563EB' width='100' height='100'/%3E%3Ctext x='50' y='50' font-size='60' fill='white' text-anchor='middle' dominant-baseline='middle' font-weight='bold'%3EQ%3C/text%3E%3C/svg%3E">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #020617;
+            --bg-secondary: #0F172A;
+            --bg-tertiary: #1a2744;
+            --primary: #2563EB;
+            --primary-dark: #1d4ed8;
+            --accent: #06B6D4;
+            --accent-dark: #0891b2;
+            --success: #22C55E;
+            --danger: #EF4444;
+            --text-primary: #F8FAFC;
+            --text-secondary: #CBD5E1;
+            --text-tertiary: #94a3b8;
+            --border: #334155;
+            --shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Typography */
+        h1 { font-size: 3.5rem; font-weight: 800; line-height: 1.1; letter-spacing: -0.02em; }
+        h2 { font-size: 2.5rem; font-weight: 700; line-height: 1.2; letter-spacing: -0.01em; }
+        h3 { font-size: 1.875rem; font-weight: 700; letter-spacing: -0.01em; }
+        h4 { font-size: 1.5rem; font-weight: 600; }
+        h5 { font-size: 1.25rem; font-weight: 600; }
+        h6 { font-size: 1rem; font-weight: 600; }
+        p { font-size: 1.125rem; color: var(--text-secondary); line-height: 1.8; }
+        small { font-size: 0.875rem; }
+
+        a {
+            color: var(--primary);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        a:hover {
+            color: var(--accent);
+        }
+
+        /* Containers */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        section {
+            padding: 6rem 0;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 80px;
+            background: rgba(2, 6, 23, 0.85);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(51, 65, 85, 0.3);
+            z-index: 1000;
+            animation: slideDown 0.5s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 100%;
+        }
+
+        .nav-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-btn {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(37, 99, 235, 0.4);
+        }
+
+        .mobile-menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+        }
+
+        .mobile-menu-toggle span {
+            width: 25px;
+            height: 2px;
+            background: var(--text-primary);
+            border-radius: 2px;
+            transition: var(--transition);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding-top: 140px;
+            position: relative;
+            overflow: hidden;
+            min-height: calc(100vh - 80px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(37, 99, 235, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(6, 182, 212, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            max-width: 900px;
+        }
+
+        .hero h1 {
+            background: linear-gradient(135deg, var(--text-primary), var(--text-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1.5rem;
+            animation: fadeInUp 0.8s ease-out 0.1s both;
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            color: var(--accent);
+            margin-bottom: 2rem;
+            animation: fadeInUp 0.8s ease-out 0.2s both;
+        }
+
+        .hero-meta {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+            animation: fadeInUp 0.8s ease-out 0.3s both;
+        }
+
+        .meta-badge {
+            background: rgba(37, 99, 235, 0.1);
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            padding: 0.5rem 1rem;
+            border-radius: 9999px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .meta-badge i {
+            margin-right: 0.5rem;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 4rem;
+            animation: fadeInUp 0.8s ease-out 0.4s both;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            font-size: 1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn:active::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 24px rgba(37, 99, 235, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(37, 99, 235, 0.1);
+        }
+
+        .btn-accent {
+            background: transparent;
+            border: 2px solid var(--accent);
+            color: var(--accent);
+        }
+
+        .btn-accent:hover {
+            background: rgba(6, 182, 212, 0.1);
+        }
+
+        /* Stats */
+        .hero-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 2rem;
+            animation: fadeInUp 0.8s ease-out 0.5s both;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: var(--text-tertiary);
+            font-size: 0.95rem;
+        }
+
+        /* Particles */
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            pointer-events: none;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .particle {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        /* About Section */
+        .about {
+            background: linear-gradient(180deg, rgba(15, 23, 42, 0.5), rgba(2, 6, 23, 0.8));
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            margin-top: 3rem;
+        }
+
+        .about-text h3 {
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        .about-text p {
+            margin-bottom: 1.5rem;
+        }
+
+        .about-highlights {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .highlight {
+            display: flex;
+            gap: 1rem;
+            padding: 1rem;
+            background: rgba(37, 99, 235, 0.05);
+            border-left: 4px solid var(--primary);
+            border-radius: 0.5rem;
+            transition: var(--transition);
+        }
+
+        .highlight:hover {
+            background: rgba(37, 99, 235, 0.1);
+            transform: translateX(10px);
+        }
+
+        .highlight-icon {
+            color: var(--accent);
+            font-size: 1.5rem;
+            flex-shrink: 0;
+            margin-top: 0.25rem;
+        }
+
+        .highlight-content h4 {
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        /* Features Section */
+        .features {
+            position: relative;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .feature-card {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.8), rgba(26, 39, 68, 0.5));
+            border: 1px solid rgba(37, 99, 235, 0.2);
+            padding: 2rem;
+            border-radius: 0.75rem;
+            transition: var(--transition);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(37, 99, 235, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .feature-card:hover::before {
+            left: 100%;
+        }
+
+        .feature-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(37, 99, 235, 0.2);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card h4 {
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .feature-card p {
+            font-size: 1rem;
+            color: var(--text-tertiary);
+        }
+
+        /* Architecture Section */
+        .architecture {
+            background: linear-gradient(180deg, rgba(2, 6, 23, 0.8), rgba(15, 23, 42, 0.5));
+        }
+
+        .architecture-diagram {
+            position: relative;
+            margin-top: 3rem;
+            padding: 2rem;
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid var(--border);
+            border-radius: 1rem;
+            min-height: 400px;
+            overflow: auto;
+        }
+
+        .layer {
+            margin-bottom: 1.5rem;
+            padding: 1.5rem;
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(6, 182, 212, 0.05));
+            border-left: 4px solid var(--primary);
+            border-radius: 0.5rem;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .layer:hover {
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.2), rgba(6, 182, 212, 0.1));
+            transform: translateX(10px);
+            box-shadow: 0 10px 20px rgba(37, 99, 235, 0.15);
+        }
+
+        .layer-number {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            font-weight: 700;
+            margin-right: 1rem;
+        }
+
+        .layer-info h4 {
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .layer-info p {
+            margin: 0;
+            font-size: 0.95rem;
+        }
+
+        /* Threat Model Section */
+        .threat-model {
+            position: relative;
+        }
+
+        .threat-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .threat-card {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.8), rgba(26, 39, 68, 0.5));
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            padding: 2rem;
+            border-radius: 0.75rem;
+            transition: var(--transition);
+        }
+
+        .threat-card:hover {
+            border-color: var(--danger);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(239, 68, 68, 0.15);
+        }
+
+        .threat-card.success-card {
+            border-color: rgba(34, 197, 94, 0.2);
+        }
+
+        .threat-card.success-card:hover {
+            border-color: var(--success);
+            box-shadow: 0 20px 40px rgba(34, 197, 94, 0.15);
+        }
+
+        .threat-card-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            min-height: 50px;
+        }
+
+        .threat-card h4 {
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+
+        /* Migration Timeline */
+        .timeline {
+            position: relative;
+            margin-top: 3rem;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(180deg, var(--primary), var(--accent), var(--success));
+        }
+
+        .timeline-item {
+            margin-bottom: 3rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .timeline-item:nth-child(odd) {
+            flex-direction: row;
+        }
+
+        .timeline-item:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+
+        .timeline-content {
+            width: 45%;
+            padding: 1.5rem;
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid var(--border);
+            border-radius: 0.5rem;
+            transition: var(--transition);
+        }
+
+        .timeline-content:hover {
+            background: rgba(37, 99, 235, 0.1);
+            border-color: var(--primary);
+            transform: translateY(-5px);
+        }
+
+        .timeline-dot {
+            width: 16px;
+            height: 16px;
+            background: var(--primary);
+            border: 3px solid var(--bg-primary);
+            border-radius: 50%;
+            position: relative;
+            z-index: 2;
+            margin: 0 2rem;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.7); }
+            50% { box-shadow: 0 0 0 10px rgba(37, 99, 235, 0); }
+        }
+
+        .timeline-content h4 {
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+
+        /* Technologies Section */
+        .technologies {
+            background: linear-gradient(180deg, rgba(15, 23, 42, 0.5), rgba(2, 6, 23, 0.8));
+            margin-top: 4rem;
+        }
+
+        .tech-badges {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .tech-badge {
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(6, 182, 212, 0.1));
+            border: 1px solid rgba(37, 99, 235, 0.3);
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            text-align: center;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .tech-badge:hover {
+            border-color: var(--primary);
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.2), rgba(6, 182, 212, 0.15));
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(37, 99, 235, 0.2);
+        }
+
+        .tech-badge-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            color: var(--accent);
+        }
+
+        .tech-badge-name {
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 0.95rem;
+        }
+
+        /* Publication Section */
+        .publication {
+            position: relative;
+        }
+
+        .publication-card {
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(6, 182, 212, 0.05));
+            border: 1px solid var(--primary);
+            padding: 3rem;
+            border-radius: 1rem;
+            margin-top: 3rem;
+        }
+
+        .publication-meta {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .meta-label {
+            color: var(--text-tertiary);
+            font-weight: 500;
+        }
+
+        .meta-value {
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .publication-card h3 {
+            margin-bottom: 1.5rem;
+            color: var(--accent);
+        }
+
+        .publication-abstract {
+            background: rgba(15, 23, 42, 0.8);
+            padding: 1.5rem;
+            border-left: 4px solid var(--primary);
+            border-radius: 0.5rem;
+            margin-bottom: 2rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        .citation-box {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--border);
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            margin-bottom: 2rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            overflow-x: auto;
+            color: var(--accent);
+        }
+
+        .citation-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        /* Downloads Section */
+        .downloads {
+            background: linear-gradient(180deg, rgba(15, 23, 42, 0.5), rgba(2, 6, 23, 0.8));
+            margin-top: 4rem;
+        }
+
+        .download-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .download-card {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.8), rgba(26, 39, 68, 0.5));
+            border: 1px solid var(--border);
+            padding: 2rem;
+            border-radius: 0.75rem;
+            text-align: center;
+            transition: var(--transition);
+        }
+
+        .download-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(37, 99, 235, 0.15);
+        }
+
+        .download-icon {
+            font-size: 2.5rem;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        .download-card h4 {
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .download-card p {
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Repository Section */
+        .repository {
+            position: relative;
+        }
+
+        .repo-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin-top: 3rem;
+            align-items: start;
+        }
+
+        .repo-info {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .repo-stat {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .repo-stat-icon {
+            font-size: 1.5rem;
+            color: var(--accent);
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(37, 99, 235, 0.1);
+            border-radius: 0.5rem;
+        }
+
+        .repo-stat-text h4 {
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .repo-stat-text p {
+            font-size: 0.9rem;
+            margin: 0;
+        }
+
+        .repo-tree {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            border: 1px solid var(--border);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            color: var(--text-tertiary);
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .repo-tree-item {
+            margin-bottom: 0.5rem;
+            color: var(--text-secondary);
+        }
+
+        .repo-tree-item.file {
+            padding-left: 2rem;
+            color: var(--accent);
+        }
+
+        .repo-tree-item.folder {
+            color: var(--primary);
+            margin-top: 0.5rem;
+        }
+
+        /* Contact Section */
+        .contact {
+            background: linear-gradient(180deg, rgba(2, 6, 23, 0.8), rgba(15, 23, 42, 0.5));
+            text-align: center;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .contact-card {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.8), rgba(26, 39, 68, 0.5));
+            border: 1px solid var(--border);
+            padding: 2rem;
+            border-radius: 0.75rem;
+            transition: var(--transition);
+        }
+
+        .contact-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(37, 99, 235, 0.15);
+        }
+
+        .contact-icon {
+            font-size: 2.5rem;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        .contact-card h4 {
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-card a {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(15, 23, 42, 0.8);
+            border-top: 1px solid var(--border);
+            padding: 3rem 0;
+            margin-top: 6rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h4 {
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section a {
+            color: var(--text-tertiary);
+            transition: var(--transition);
+        }
+
+        .footer-section a:hover {
+            color: var(--accent);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid var(--border);
+            padding-top: 2rem;
+            text-align: center;
+            color: var(--text-tertiary);
+            font-size: 0.9rem;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes glow {
+            0%, 100% { filter: drop-shadow(0 0 10px rgba(37, 99, 235, 0.5)); }
+            50% { filter: drop-shadow(0 0 20px rgba(37, 99, 235, 0.8)); }
+        }
+
+        .visible {
+            animation: fadeInUp 0.8s ease-out forwards !important;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            h2 { font-size: 1.75rem; }
+            h3 { font-size: 1.5rem; }
+            
+            section { padding: 4rem 0; }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 80px;
+                left: 0;
+                right: 0;
+                flex-direction: column;
+                background: var(--bg-secondary);
+                padding: 1rem 0;
+                border-bottom: 1px solid var(--border);
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .nav-links a {
+                padding: 0.75rem 2rem;
+                display: block;
+            }
+
+            .mobile-menu-toggle {
+                display: flex;
+            }
+
+            .mobile-menu-toggle.active span:nth-child(1) {
+                transform: rotate(45deg) translate(8px, 8px);
+            }
+
+            .mobile-menu-toggle.active span:nth-child(2) {
+                opacity: 0;
+            }
+
+            .mobile-menu-toggle.active span:nth-child(3) {
+                transform: rotate(-45deg) translate(7px, -7px);
+            }
+
+            .about-grid,
+            .repo-content {
+                grid-template-columns: 1fr;
+            }
+
+            .timeline::before {
+                left: 20px;
+            }
+
+            .timeline-item {
+                margin-left: 60px;
+            }
+
+            .timeline-item:nth-child(even),
+            .timeline-item:nth-child(odd) {
+                flex-direction: row;
+            }
+
+            .timeline-content {
+                width: 100%;
+            }
+
+            .timeline-dot {
+                margin: 0;
+                position: absolute;
+                left: -42px;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 1rem;
+            }
+
+            h1 { font-size: 1.75rem; }
+            h2 { font-size: 1.25rem; }
+            h3 { font-size: 1.1rem; }
+            p { font-size: 1rem; }
+
+            .hero-meta {
+                flex-direction: column;
+                gap: 0.75rem;
+            }
+
+            .meta-badge {
+                width: 100%;
+            }
+
+            .tech-badges {
+                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            }
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-secondary);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent);
+        }
+
+        /* Print styles */
+        @media print {
+            nav, .mobile-menu-toggle, .btn { display: none; }
+            body { background: white; color: black; }
+        }
+    </style>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+
+        if (mobileMenuToggle) {
+            mobileMenuToggle.addEventListener('click', () => {
+                mobileMenuToggle.classList.toggle('active');
+                navLinks.classList.toggle('active');
+            });
+
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenuToggle.classList.remove('active');
+                    navLinks.classList.remove('active');
+                });
+            });
+        }
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        // Intersection Observer for scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.feature-card, .highlight, .layer, .tech-badge, .download-card, .contact-card, .threat-card, .timeline-content, .repo-stat').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Animated counter
+        function animateCounter(element, target, duration = 2000) {
+            let start = 0;
+            const increment = target / (duration / 16);
+            const timer = setInterval(() => {
+                start += increment;
+                if (start >= target) {
+                    element.textContent = target;
+                    clearInterval(timer);
+                } else {
+                    element.textContent = Math.floor(start);
+                }
+            }, 16);
+        }
+
+        // Observe stats for counter animation
+        const statsObserver = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && !entry.target.dataset.animated) {
+                    entry.target.dataset.animated = 'true';
+                    const number = parseInt(entry.target.textContent);
+                    animateCounter(entry.target, number);
+                    statsObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        document.querySelectorAll('.stat-number').forEach(stat => {
+            statsObserver.observe(stat);
+        });
+
+        // Create particles
+        function createParticles() {
+            const particlesContainer = document.querySelector('.particles');
+            if (!particlesContainer) return;
+
+            for (let i = 0; i < 20; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                
+                const size = Math.random() * 4 + 1;
+                const x = Math.random() * 100;
+                const y = Math.random() * 100;
+                const duration = Math.random() * 3 + 2;
+                const delay = Math.random() * 2;
+
+                particle.style.cssText = `
+                    width: ${size}px;
+                    height: ${size}px;
+                    left: ${x}%;
+                    top: ${y}%;
+                    background: rgba(37, 99, 235, ${Math.random() * 0.5 + 0.2});
+                    border-radius: 50%;
+                    animation-duration: ${duration}s;
+                    animation-delay: ${delay}s;
+                `;
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // Typed effect
+        function typeText(element, text, speed = 50) {
+            let i = 0;
+            element.textContent = '';
+            
+            const type = () => {
+                if (i < text.length) {
+                    element.textContent += text.charAt(i);
+                    i++;
+                    setTimeout(type, speed);
+                }
+            };
+            
+            type();
+        }
+
+        // Copy to clipboard
+        window.copyToClipboard = function(text, button) {
+            navigator.clipboard.writeText(text).then(() => {
+                const originalText = button.textContent;
+                button.textContent = 'Copied!';
+                setTimeout(() => {
+                    button.textContent = originalText;
+                }, 2000);
+            });
+        };
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            createParticles();
+        });
+
+        // Parallax effect on scroll
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const parallaxElements = document.querySelectorAll('[data-parallax]');
+            parallaxElements.forEach(el => {
+                el.style.transform = `translateY(${scrolled * 0.5}px)`;
+            });
+        });
+    </script>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <div class="nav-logo">
+                <i class="fas fa-cube"></i> PQ API Security
+            </div>
+            <ul class="nav-links">
+                <li><a href="#about">About</a></li>
+                <li><a href="#architecture">Architecture</a></li>
+                <li><a href="#threats">Threats</a></li>
+                <li><a href="#migration">Migration</a></li>
+                <li><a href="#publication">Publication</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li><a href="https://github.com/sr-857/post-quantum-api-security" target="_blank" class="nav-btn">
+                    <i class="fab fa-github"></i> GitHub
+                </a></li>
+            </ul>
+            <div class="mobile-menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="particles"></div>
+        <div class="container">
+            <div class="hero-content">
+                <h1>Post-Quantum Secure API Communication</h1>
+                <p class="hero-subtitle">Architectures and Migration Strategies for Quantum-Resilient Systems</p>
+                
+                <div class="hero-meta">
+                    <div class="meta-badge">
+                        <i class="fas fa-shield-alt"></i> Quantum-Safe
+                    </div>
+                    <div class="meta-badge">
+                        <i class="fas fa-network-wired"></i> API Security
+                    </div>
+                    <div class="meta-badge">
+                        <i class="fas fa-cube"></i> Hybrid TLS 1.3
+                    </div>
+                </div>
+
+                <div class="hero-buttons">
+                    <a href="https://github.com/sr-857/post-quantum-api-security/blob/main/paper/paper.pdf" target="_blank" class="btn btn-primary">
+                        <i class="fas fa-file-pdf"></i> Read Paper
+                    </a>
+                    <a href="#publication" class="btn btn-secondary">
+                        <i class="fas fa-arrow-down"></i> Explore
+                    </a>
+                    <a href="https://orcid.org/0009-0000-4896-0922" target="_blank" class="btn btn-accent">
+                        <i class="fab fa-orcid"></i> ORCID
+                    </a>
+                </div>
+
+                <div class="hero-stats">
+                    <div class="stat">
+                        <div class="stat-number">5</div>
+                        <div class="stat-label">Architecture Layers</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">4</div>
+                        <div class="stat-label">Migration Phases</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">3</div>
+                        <div class="stat-label">NIST Algorithms</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">2026</div>
+                        <div class="stat-label">Publication Year</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="container">
+            <h2>Research Overview</h2>
+            <div class="about-grid">
+                <div class="about-text">
+                    <h3>The Quantum Threat</h3>
+                    <p>Shor's algorithm renders RSA and elliptic-curve cryptography insecure against cryptographically relevant quantum computers. The harvest-now, decrypt-later threat means adversaries are recording encrypted API traffic today to decrypt retroactively once quantum capability matures.</p>
+                    <p>NIST finalized post-quantum cryptographic standards in 2024: ML-KEM (FIPS 203), ML-DSA (FIPS 204), and SLH-DSA (FIPS 205).</p>
+                </div>
+                <div class="about-highlights">
+                    <div class="highlight">
+                        <div class="highlight-icon">
+                            <i class="fas fa-lightbulb"></i>
+                        </div>
+                        <div class="highlight-content">
+                            <h4>Why Now?</h4>
+                            <p>HNDL threat accrues continuously from today regardless of when quantum computers arrive.</p>
+                        </div>
+                    </div>
+                    <div class="highlight">
+                        <div class="highlight-icon">
+                            <i class="fas fa-layer-group"></i>
+                        </div>
+                        <div class="highlight-content">
+                            <h4>Layered Approach</h4>
+                            <p>Five-layer architecture addressing transport, certificates, tokens, gateways, and applications.</p>
+                        </div>
+                    </div>
+                    <div class="highlight">
+                        <div class="highlight-icon">
+                            <i class="fas fa-compass"></i>
+                        </div>
+                        <div class="highlight-content">
+                            <h4>Cryptographic Agility</h4>
+                            <p>Algorithm substitution without redesigning system architecture ensures future-proofing.</p>
+                        </div>
+                    </div>
+                    <div class="highlight">
+                        <div class="highlight-icon">
+                            <i class="fas fa-road"></i>
+                        </div>
+                        <div class="highlight-content">
+                            <h4>Migration Framework</h4>
+                            <p>Four-phase phased approach minimizes operational risk and maintains backward compatibility.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <h2>Key Contributions</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-project-diagram"></i>
+                    </div>
+                    <h4>Five-Layer Architecture</h4>
+                    <p>Reference architecture delineating trust boundaries across transport, certificate, token, gateway, and application layers.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <h4>Threat Model</h4>
+                    <p>Comprehensive analysis of classical and harvest-now-decrypt-later adversaries, protected assets, and attack surfaces.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <h4>Hybrid TLS 1.3</h4>
+                    <p>ML-KEM + ECDHE key exchange combining classical and post-quantum security following IETF guidance.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-certificate"></i>
+                    </div>
+                    <h4>Certificate Migration</h4>
+                    <p>Strategies for X.509 chains with post-quantum signatures: parallel chains and composite certificates.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h4>JWT & OAuth 2.0</h4>
+                    <p>Algorithm-agnostic migration patterns enabling incremental transition with ML-DSA signatures.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-road"></i>
+                    </div>
+                    <h4>Phased Framework</h4>
+                    <p>Four-phase migration: inventory, hybrid transport, certificate/token migration, and agility consolidation.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Architecture Section -->
+    <section class="architecture" id="architecture">
+        <div class="container">
+            <h2>Reference Architecture</h2>
+            <p>The proposed five-layer architecture separates API security concerns into distinct layers with individual migration timelines and trust boundaries.</p>
+            
+            <div class="architecture-diagram">
+                <div class="layer">
+                    <div style="display: flex; align-items: start;">
+                        <div class="layer-number">1</div>
+                        <div class="layer-info">
+                            <h4><i class="fas fa-network-wired"></i> Transport Layer</h4>
+                            <p>TLS 1.3 with hybrid key exchange (ML-KEM + ECDHE). Protects data in transit between clients and servers.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="layer">
+                    <div style="display: flex; align-items: start;">
+                        <div class="layer-number">2</div>
+                        <div class="layer-info">
+                            <h4><i class="fas fa-certificate"></i> Certificate Layer</h4>
+                            <p>X.509 chains with post-quantum signatures (ML-DSA, SLH-DSA). Sequential or composite certificate strategies.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="layer">
+                    <div style="display: flex; align-items: start;">
+                        <div class="layer-number">3</div>
+                        <div class="layer-info">
+                            <h4><i class="fas fa-key"></i> Token Layer</h4>
+                            <p>JWT and OAuth 2.0 with post-quantum signature algorithms. Algorithm-agnostic migration via header identifiers.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="layer">
+                    <div style="display: flex; align-items: start;">
+                        <div class="layer-number">4</div>
+                        <div class="layer-info">
+                            <h4><i class="fas fa-door-open"></i> Gateway Layer</h4>
+                            <p>API gateway and reverse proxy. Convergence point for transport, certificate, and token migrations with algorithm negotiation.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="layer">
+                    <div style="display: flex; align-items: start;">
+                        <div class="layer-number">5</div>
+                        <div class="layer-info">
+                            <h4><i class="fas fa-cube"></i> Application Layer</h4>
+                            <p>Business logic consuming validated requests. Generally minimal changes provided lower layers expose stable interface.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Threat Model Section -->
+    <section class="threat-model" id="threats">
+        <div class="container">
+            <h2>Threat Model</h2>
+            <p>Analysis of adversary classes, protected assets, and security goals for quantum-resilient API systems.</p>
+            
+            <div class="threat-cards">
+                <div class="threat-card">
+                    <div class="threat-card-icon" style="color: var(--danger);">
+                        <i class="fas fa-user-secret"></i>
+                    </div>
+                    <h4>Classical Adversary</h4>
+                    <p>Passive eavesdropping and active MITM attacks bounded by present-day computational limits.</p>
+                </div>
+
+                <div class="threat-card">
+                    <div class="threat-card-icon" style="color: var(--danger);">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <h4>Harvest-Now, Decrypt-Later</h4>
+                    <p>Adversary records encrypted traffic today for retroactive decryption once quantum capability matures.</p>
+                </div>
+
+                <div class="threat-card success-card">
+                    <div class="threat-card-icon">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <h4>Forward Secrecy</h4>
+                    <p>Hybrid key exchange ensures session security if either classical or post-quantum component remains unbroken.</p>
+                </div>
+
+                <div class="threat-card success-card">
+                    <div class="threat-card-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <h4>Authenticity</h4>
+                    <p>Post-quantum signatures protect certificate and token integrity against quantum adversaries.</p>
+                </div>
+
+                <div class="threat-card success-card">
+                    <div class="threat-card-icon">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <h4>Compatibility</h4>
+                    <p>Backward compatibility during transition ensures classical-only clients function without disruption.</p>
+                </div>
+
+                <div class="threat-card success-card">
+                    <div class="threat-card-icon">
+                        <i class="fas fa-sliders-h"></i>
+                    </div>
+                    <h4>Agility</h4>
+                    <p>Configuration-driven algorithm selection enables algorithm rollback and future transitions.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Migration Timeline -->
+    <section class="migration" id="migration">
+        <div class="container">
+            <h2>Migration Framework</h2>
+            <p>Four-phase phased migration approach prioritizing transport-layer protection with coordinated certificate and token migration.</p>
+            
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h4>Phase 0: Inventory</h4>
+                        <p>Catalog all cryptographic dependencies across transport, certificate, token, and gateway layers including third-party libraries and vendor-managed infrastructure.</p>
+                    </div>
+                    <div class="timeline-dot"></div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h4>Phase 1: Hybrid Transport</h4>
+                        <p>Enable hybrid TLS key exchange at gateway and load-balancer tiers with classical-only fallback for non-upgraded clients.</p>
+                    </div>
+                    <div class="timeline-dot"></div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h4>Phase 2: Certificate & Token Migration</h4>
+                        <p>Issue composite or parallel post-quantum certificate chains; begin dual-algorithm JWT issuance and validation.</p>
+                    </div>
+                    <div class="timeline-dot"></div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h4>Phase 3: Agility Consolidation</h4>
+                        <p>Remove deprecated classical-only code paths once client population and compliance requirements permit, retaining configuration-level agility.</p>
+                    </div>
+                    <div class="timeline-dot"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technologies Section -->
+    <section class="technologies">
+        <div class="container">
+            <h2>Technologies & Standards</h2>
+            <p>NIST-standardized post-quantum algorithms and protocol support.</p>
+            
+            <div class="tech-badges">
+                <div class="tech-badge">
+                    <div class="tech-badge-icon">
+                        <i class="fas fa-cube"></i>
+                    </div>
+                    <div class="tech-badge-name">ML-KEM-512/768/1024</div>
+                    <small>FIPS 203</small>
+                </div>
+
+                <div class="tech-badge">
+                    <div class="tech-badge-icon">
+                        <i class="fas fa-signature"></i>
+                    </div>
+                    <div class="tech-badge-name">ML-DSA-44/65/87</div>
+                    <small>FIPS 204</small>
+                </div>
+
+                <div class="tech-badge">
+                    <div class="tech-badge-icon">
+                        <i class="fas fa-tree"></i>
+                    </div>
+                    <div class="tech-badge-name">SLH-DSA-128/192/256</div>
+                    <small>FIPS 205</small>
+                </div>
+
+                <div class="tech-badge">
+                    <div class="tech-badge-icon">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <div class="tech-badge-name">Hybrid Key Exchange</div>
+                    <small>IETF Draft</small>
+                </div>
+
+                <div class="tech-badge">
+                    <div class="tech-badge-icon">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <div class="tech-badge-name">TLS 1.3</div>
+                    <small>RFC 8446</small>
+                </div>
+
+                <div class="tech-badge">
+                    <div class="tech-badge-icon">
+                        <i class="fas fa-certificate"></i>
+                    </div>
+                    <div class="tech-badge-name">X.509 Composite</div>
+                    <small>IETF LAMPS</small>
+                </div>
+
+                <div class="tech-badge">
+                    <div class="tech-badge-icon">
+                        <i class="fas fa-key"></i>
+                    </div>
+                    <div class="tech-badge-name">JWT</div>
+                    <small>RFC 7519</small>
+                </div>
+
+                <div class="tech-badge">
+                    <div class="tech-badge-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <div class="tech-badge-name">OAuth 2.0</div>
+                    <small>RFC 6749</small>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Publication Section -->
+    <section class="publication" id="publication">
+        <div class="container">
+            <h2>Publication</h2>
+            
+            <div class="publication-card">
+                <h3>Post-Quantum Secure API Communication: Architectures and Migration Strategies for Quantum-Resilient Systems</h3>
+                
+                <div class="publication-meta">
+                    <div class="meta-item">
+                        <span class="meta-label"><i class="fas fa-user"></i> Author:</span>
+                        <span class="meta-value">Subhajit Roy</span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label"><i class="fas fa-calendar"></i> Year:</span>
+                        <span class="meta-value">2026</span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label"><i class="fas fa-building"></i> Publisher:</span>
+                        <span class="meta-value">Zenodo</span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label"><i class="fas fa-barcode"></i> DOI:</span>
+                        <span class="meta-value">
+                            <a href="https://doi.org/10.5281/zenodo.20413115" target="_blank">10.5281/zenodo.20413115</a>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="publication-abstract">
+                    <strong>Abstract:</strong> The advent of cryptographically relevant quantum computers threatens the asymmetric primitives — RSA, Diffie-Hellman, and elliptic-curve cryptography — that underpin the confidentiality and integrity of contemporary API communication. While large-scale quantum adversaries do not yet exist, the "harvest now, decrypt later" threat model means that data encrypted today under classical schemes may already be exposed to future cryptanalysis. This paper examines the practical migration of API security architectures toward post-quantum cryptography (PQC), focusing on the NIST-standardized algorithms ML-KEM (FIPS 203), ML-DSA (FIPS 204), and SLH-DSA (FIPS 205). We propose a layered reference architecture for quantum-resilient API systems, evaluate hybrid key-exchange strategies for TLS 1.3, and analyze the downstream effects of PQC adoption on certificate chains, JWT, OAuth 2.0 token issuance, and API gateway design. We further present a phased migration framework intended to guide practitioners through the transition without requiring a disruptive, single-step cutover.
+                </div>
+
+                <div style="margin-bottom: 2rem;">
+                    <strong style="color: var(--text-primary); display: block; margin-bottom: 1rem;">BibTeX Citation:</strong>
+                    <div class="citation-box">@misc{roy2026postquantum,<br>
+                        &nbsp;&nbsp;author = {Subhajit Roy},<br>
+                        &nbsp;&nbsp;title = {Post-Quantum Secure API Communication: Architectures and Migration Strategies for Quantum-Resilient Systems},<br>
+                        &nbsp;&nbsp;year = {2026},<br>
+                        &nbsp;&nbsp;publisher = {Zenodo},<br>
+                        &nbsp;&nbsp;doi = {10.5281/zenodo.20413115},<br>
+                        &nbsp;&nbsp;url = {https://doi.org/10.5281/zenodo.20413115}<br>
+                    }</div>
+                </div>
+
+                <div class="citation-buttons">
+                    <button class="btn btn-primary" onclick="copyToClipboard('@misc{roy2026postquantum,\n  author = {Subhajit Roy},\n  title = {Post-Quantum Secure API Communication: Architectures and Migration Strategies for Quantum-Resilient Systems},\n  year = {2026},\n  publisher = {Zenodo},\n  doi = {10.5281/zenodo.20413115},\n  url = {https://doi.org/10.5281/zenodo.20413115}\n}', this)">
+                        <i class="fas fa-copy"></i> Copy BibTeX
+                    </button>
+                    <a href="https://doi.org/10.5281/zenodo.20413115" target="_blank" class="btn btn-secondary">
+                        <i class="fas fa-external-link-alt"></i> Zenodo Record
+                    </a>
+                    <a href="https://github.com/sr-857/post-quantum-api-security/blob/main/paper/paper.pdf" target="_blank" class="btn btn-accent">
+                        <i class="fas fa-file-pdf"></i> Download PDF
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Downloads Section -->
+    <section class="downloads">
+        <div class="container">
+            <h2>Downloads & Resources</h2>
+            
+            <div class="download-grid">
+                <div class="download-card">
+                    <div class="download-icon">
+                        <i class="fas fa-file-pdf"></i>
+                    </div>
+                    <h4>Research Paper</h4>
+                    <p>Complete academic paper with full analysis, architecture diagrams, and migration framework.</p>
+                    <a href="https://github.com/sr-857/post-quantum-api-security/blob/main/paper/paper.pdf" target="_blank" class="btn btn-primary" style="width: 100%;">
+                        <i class="fas fa-download"></i> Download PDF
+                    </a>
+                </div>
+
+                <div class="download-card">
+                    <div class="download-icon">
+                        <i class="fab fa-github"></i>
+                    </div>
+                    <h4>GitHub Repository</h4>
+                    <p>Source code, documentation, diagrams, and roadmap for implementation work.</p>
+                    <a href="https://github.com/sr-857/post-quantum-api-security" target="_blank" class="btn btn-primary" style="width: 100%;">
+                        <i class="fas fa-code-branch"></i> View Repository
+                    </a>
+                </div>
+
+                <div class="download-card">
+                    <div class="download-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <h4>Zenodo Record</h4>
+                    <p>Digital Object Identifier (DOI) with full publication metadata and citation information.</p>
+                    <a href="https://doi.org/10.5281/zenodo.20413115" target="_blank" class="btn btn-primary" style="width: 100%;">
+                        <i class="fas fa-external-link-alt"></i> Access DOI
+                    </a>
+                </div>
+
+                <div class="download-card">
+                    <div class="download-icon">
+                        <i class="fas fa-quote-left"></i>
+                    </div>
+                    <h4>Citation Formats</h4>
+                    <p>BibTeX, APA, IEEE, MLA, and Chicago style citations ready to copy.</p>
+                    <button class="btn btn-primary" onclick="copyToClipboard('@misc{roy2026postquantum,\n  author = {Subhajit Roy},\n  title = {Post-Quantum Secure API Communication},\n  year = {2026},\n  publisher = {Zenodo},\n  doi = {10.5281/zenodo.20413115}\n}', this)" style="width: 100%;">
+                        <i class="fas fa-copy"></i> Copy Citation
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Repository Section -->
+    <section class="repository">
+        <div class="container">
+            <h2>Repository Structure</h2>
+            
+            <div class="repo-content">
+                <div class="repo-info">
+                    <div class="repo-stat">
+                        <div class="repo-stat-icon">
+                            <i class="fas fa-file-pdf"></i>
+                        </div>
+                        <div class="repo-stat-text">
+                            <h4>Research Paper</h4>
+                            <p>Complete academic paper in LaTeX and PDF formats with IEEE conference styling.</p>
+                        </div>
+                    </div>
+
+                    <div class="repo-stat">
+                        <div class="repo-stat-icon">
+                            <i class="fas fa-book"></i>
+                        </div>
+                        <div class="repo-stat-text">
+                            <h4>Documentation</h4>
+                            <p>Architecture guide, threat model analysis, migration framework, and glossary.</p>
+                        </div>
+                    </div>
+
+                    <div class="repo-stat">
+                        <div class="repo-stat-icon">
+                            <i class="fas fa-image"></i>
+                        </div>
+                        <div class="repo-stat-text">
+                            <h4>Diagrams</h4>
+                            <p>SVG and PNG diagrams: architecture, threat model, migration roadmap, and handshake sequences.</p>
+                        </div>
+                    </div>
+
+                    <div class="repo-stat">
+                        <div class="repo-stat-icon">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <div class="repo-stat-text">
+                            <h4>Examples & Prototypes</h4>
+                            <p>Placeholder scope for future implementation work, benchmarks, and code examples.</p>
+                        </div>
+                    </div>
+
+                    <div class="repo-stat">
+                        <div class="repo-stat-icon">
+                            <i class="fas fa-road"></i>
+                        </div>
+                        <div class="repo-stat-text">
+                            <h4>Roadmap</h4>
+                            <p>Research milestones, future work, and implementation plans in CHANGELOG.md.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <strong style="color: var(--text-primary); display: block; margin-bottom: 1rem;">Directory Structure:</strong>
+                    <div class="repo-tree">
+                        <div class="repo-tree-item folder">post-quantum-api-security/</div>
+                        <div class="repo-tree-item">├── README.md</div>
+                        <div class="repo-tree-item">├── LICENSE</div>
+                        <div class="repo-tree-item">├── CITATION.cff</div>
+                        <div class="repo-tree-item folder">├── paper/</div>
+                        <div class="repo-tree-item file">│   ├── paper.pdf</div>
+                        <div class="repo-tree-item file">│   ├── paper.tex</div>
+                        <div class="repo-tree-item file">│   └── references.bib</div>
+                        <div class="repo-tree-item folder">├── docs/</div>
+                        <div class="repo-tree-item file">│   ├── architecture.md</div>
+                        <div class="repo-tree-item file">│   ├── threat-model.md</div>
+                        <div class="repo-tree-item file">│   ├── migration-framework.md</div>
+                        <div class="repo-tree-item file">│   └── glossary.md</div>
+                        <div class="repo-tree-item folder">├── diagrams/</div>
+                        <div class="repo-tree-item file">│   ├── api-architecture.svg</div>
+                        <div class="repo-tree-item file">│   └── threat-model.png</div>
+                        <div class="repo-tree-item folder">└── implementation/</div>
+                        <div class="repo-tree-item file">    ├── examples/</div>
+                        <div class="repo-tree-item file">    └── prototypes/</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <h2>Contact & Social</h2>
+            <p>Connect with the researcher and explore related profiles and platforms.</p>
+            
+            <div class="contact-grid">
+                <div class="contact-card">
+                    <div class="contact-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <h4>Email</h4>
+                    <a href="mailto:subhajitroy857@gmail.com">subhajitroy857@gmail.com</a>
+                </div>
+
+                <div class="contact-card">
+                    <div class="contact-icon">
+                        <i class="fab fa-github"></i>
+                    </div>
+                    <h4>GitHub</h4>
+                    <a href="https://github.com/sr-857" target="_blank">@sr-857</a>
+                </div>
+
+                <div class="contact-card">
+                    <div class="contact-icon">
+                        <i class="fab fa-orcid"></i>
+                    </div>
+                    <h4>ORCID</h4>
+                    <a href="https://orcid.org/0009-0000-4896-0922" target="_blank">0009-0000-4896-0922</a>
+                </div>
+
+                <div class="contact-card">
+                    <div class="contact-icon">
+                        <i class="fab fa-linkedin"></i>
+                    </div>
+                    <h4>LinkedIn</h4>
+                    <a href="https://www.linkedin.com/in/sr857" target="_blank">/in/sr857</a>
+                </div>
+
+                <div class="contact-card">
+                    <div class="contact-icon">
+                        <i class="fab fa-google"></i>
+                    </div>
+                    <h4>Google Scholar</h4>
+                    <a href="https://scholar.google.com/citations?user=I3zt1eMAAAAJ" target="_blank">Profile</a>
+                </div>
+
+                <div class="contact-card">
+                    <div class="contact-icon">
+                        <i class="fas fa-discussion"></i>
+                    </div>
+                    <h4>GitHub Discussions</h4>
+                    <a href="https://github.com/sr-857/post-quantum-api-security/discussions" target="_blank">Open Discussion</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="https://github.com/sr-857/post-quantum-api-security">GitHub Repository</a></li>
+                        <li><a href="https://doi.org/10.5281/zenodo.20413115">Zenodo DOI</a></li>
+                        <li><a href="https://github.com/sr-857/post-quantum-api-security/blob/main/paper/paper.pdf">Paper PDF</a></li>
+                        <li><a href="https://github.com/sr-857/post-quantum-api-security/blob/main/CHANGELOG.md">Roadmap</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Documentation</h4>
+                    <ul>
+                        <li><a href="https://github.com/sr-857/post-quantum-api-security/blob/main/docs/architecture.md">Architecture</a></li>
+                        <li><a href="https://github.com/sr-857/post-quantum-api-security/blob/main/docs/threat-model.md">Threat Model</a></li>
+                        <li><a href="https://github.com/sr-857/post-quantum-api-security/blob/main/docs/migration-framework.md">Migration</a></li>
+                        <li><a href="https://github.com/sr-857/post-quantum-api-security/blob/main/docs/glossary.md">Glossary</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Author</h4>
+                    <ul>
+                        <li><a href="https://github.com/sr-857">GitHub</a></li>
+                        <li><a href="https://orcid.org/0009-0000-4896-0922">ORCID</a></li>
+                        <li><a href="https://www.linkedin.com/in/sr857">LinkedIn</a></li>
+                        <li><a href="mailto:subhajitroy857@gmail.com">Email</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Standards</h4>
+                    <ul>
+                        <li><a href="https://csrc.nist.gov/projects/post-quantum-cryptography/">NIST PQC Project</a></li>
+                        <li><a href="https://openquantumsafe.org">Open Quantum Safe</a></li>
+                        <li><a href="https://www.ietf.org">IETF</a></li>
+                        <li><a href="https://csrc.nist.gov/pubs/fips">NIST FIPS</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <div class="footer-links">
+                    <a href="https://github.com/sr-857/post-quantum-api-security/blob/main/LICENSE">MIT License</a>
+                    <a href="https://github.com/sr-857/post-quantum-api-security/blob/main/SECURITY.md">Security Policy</a>
+                    <a href="https://github.com/sr-857/post-quantum-api-security/blob/main/CONTRIBUTING.md">Contributing</a>
+                </div>
+                <p>&copy; 2026 Subhajit Roy. All rights reserved. Independent research not affiliated with NIST, IETF, or any standards body.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
